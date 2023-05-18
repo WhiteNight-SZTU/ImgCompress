@@ -13,10 +13,8 @@ Current Main features:
 	2.Get thumbnail of a .png file (Matlab needed)
 
 Current Secondary features:
-
-	1.Change NavigationViewItem from top to left and vice versa.
 	
-	2.Check user's intel connection.
+	1.Check user's intel connection.
 	
-	3.Download matlab function file from server.
+	2.Download matlab function file from server.
  

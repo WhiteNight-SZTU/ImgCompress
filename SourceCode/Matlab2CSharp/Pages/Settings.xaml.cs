@@ -30,6 +30,7 @@ using MathWorks.MATLAB.NET.Utility;
 using Microsoft.UI.Xaml.Media.Imaging;
 using static System.Net.Mime.MediaTypeNames;
 using Windows.Storage.Streams;
+using Microsoft.UI.Windowing;
 
 namespace Matlab2CSharp.Pages
 {
@@ -44,6 +45,13 @@ namespace Matlab2CSharp.Pages
                 if(navigationView.PaneDisplayMode==Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Top)
                     navigationViewPane_ChangeNavigationViewPane.IsOn = true;
             isChanging_ChangingNavigationView = true;
+
+            isChanging_FullScreen = false;
+            m_appWindow = GetAppWindowForCurrentWindow();
+            if(m_appWindow != null)
+                if(m_appWindow.Presenter.Kind==AppWindowPresenterKind.FullScreen)
+                    FullScreenSetter.IsOn= true;
+            isChanging_FullScreen = true;
 
             IntelIcon.Visibility = Visibility.Collapsed;
             initIntel();
@@ -143,6 +151,7 @@ namespace Matlab2CSharp.Pages
             }
             progressBar.Visibility = Visibility.Collapsed;
             IntelIcon.Visibility = Visibility.Visible;
+
         }
 
         private async Task DoAsyncOperation()
@@ -150,10 +159,44 @@ namespace Matlab2CSharp.Pages
             await Task.Delay(2000);
         }
 
+        private void Full_Screen(object sender, RoutedEventArgs e)
+        {
+            navigationView = MainWindow.navigationView;
+            var toggleSwitch = sender as ToggleSwitch;
+            if (isChanging_FullScreen == true)
+            {
+                m_appWindow = GetAppWindowForCurrentWindow();
+                if (toggleSwitch.IsOn == true)
+                {
+                    if (m_appWindow != null)
+                    {
+                        m_appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+                        MainWindow.current.SetAppBar(false);
+                    }
+                }
+                else
+                {
+                    if (m_appWindow != null)
+                    {
+                        m_appWindow.SetPresenter(AppWindowPresenterKind.Default);
+                        MainWindow.current.SetAppBar(true);
+                    }
+                        
+                }
+            }
+        }
 
+        private Microsoft.UI.Windowing.AppWindow GetAppWindowForCurrentWindow()
+        {
+            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.current);
+            WindowId myWndId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+            return Microsoft.UI.Windowing.AppWindow.GetFromWindowId(myWndId);
+        }
 
+        private Microsoft.UI.Windowing.AppWindow m_appWindow;
         private static Microsoft.UI.Xaml.Controls.NavigationView navigationView;
         private static bool isChanging_ChangingNavigationView = false;
+        private static bool isChanging_FullScreen = false;
         public static StorageFile matlabFunctionFile;
         public static StorageFolder matlatFunctionFolder;
         public static string folderPath;

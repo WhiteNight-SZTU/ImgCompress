@@ -35,7 +35,7 @@ namespace Matlab2CSharp
         public static MainWindow current;
         public static Microsoft.UI.Xaml.Controls.NavigationView navigationView;
         public static Microsoft.UI.Xaml.Controls.Frame currentFrame;
-
+        
         public MainWindow()
         {
             this.InitializeComponent();
@@ -46,6 +46,17 @@ namespace Matlab2CSharp
             pagesFrame.Navigate(pageType);
 
 
+
+        }
+        public void SetAppBar(bool flag=true)
+        {
+            if (flag == false)
+            {
+                AppTitleBar.Visibility = Visibility.Collapsed;
+            }else if(flag == true)
+            {
+                AppTitleBar.Visibility=Visibility.Visible;
+            }
         }
         private void LoadPages(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
@@ -56,18 +67,14 @@ namespace Matlab2CSharp
             Type pageType = Type.GetType(pageName);
             if(pageType == null)
             {
-
+                //Should never happened.
             }
             else
             {
                 pagesFrame.Navigate(pageType);
                 currentFrame = pagesFrame;
             }
-           
         }
-     
-
+       
     }
-    
-    
 }

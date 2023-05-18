@@ -37,6 +37,7 @@ using Windows.Graphics.Imaging;
 using System.Drawing;
 using System.Diagnostics;
 using Windows.System;
+using Windows.Storage.FileProperties;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -54,6 +55,49 @@ namespace Matlab2CSharp.Pages
             if(image != null)
             {
                 myImage.Source = loadedBitmapImage;
+                compressImage.Source = afterBitmapImage;
+            }
+            if(beforeSize!=0)
+            {
+                double result = imageBytes;
+                if ((result / (1024 * 1024)) >= 1)
+                {
+                    result /= 1024 * 1024;
+                    result = Math.Round(result, 2);
+                    OriginalImage.Text = $"原始图像 大小:{result}MB";
+                }
+                else if (result / (1024) >= 1)
+                {
+                    result /= 1024;
+                    result = Math.Round(result, 2);
+                    OriginalImage.Text = $"原始图像 大小:{result}KB";
+                }
+                else
+                {
+                    result = Math.Round(result, 2);
+                    OriginalImage.Text = $"原始图像 大小:{result}Bytes";
+                }
+            }
+            if(afterSize!=0)
+            {
+                double result = afterImageBytes;
+                if ((result / (1024 * 1024)) >= 1)
+                {
+                    result /= 1024 * 1024;
+                    result = Math.Round(result, 2);
+                    CompressImage.Text = $"压缩图像 大小:{result}MB";
+                }
+                else if (result / (1024) >= 1)
+                {
+                    result /= 1024;
+                    result = Math.Round(result, 2);
+                    CompressImage.Text = $"压缩图像 大小:{result}KB";
+                }
+                else
+                {
+                    result = Math.Round(result, 2);
+                    CompressImage.Text = $"压缩图像 大小:{result}Bytes";
+                }
             }
         }
         private async void ChoosePicture(object sender, RoutedEventArgs e)
@@ -74,6 +118,30 @@ namespace Matlab2CSharp.Pages
                 loadedBitmapImage = bitmapImage;
                 myImage.Source = loadedBitmapImage;
                 currentBitmapImage = bitmapImage;
+
+                BasicProperties properties = await file.GetBasicPropertiesAsync();
+                beforeSize = properties.Size;
+                double result = Convert.ToDouble(beforeSize);
+                imageBytes = result;
+                if ((result/(1024*1024))>=1)
+                {
+                    result /= 1024 * 1024 ;
+                    result=Math.Round(result,2);
+                    OriginalImage.Text = $"原始图像 大小:{result}MB";
+                }
+                else if(result /(1024)>=1)
+                {
+                    result /= 1024;
+                    result = Math.Round(result, 2);
+                    OriginalImage.Text = $"原始图像 大小:{result}KB";
+                }
+                else
+                {
+                    result = Math.Round(result, 2);
+                    OriginalImage.Text = $"原始图像 大小:{result}Bytes";
+                }
+                beforeSize = result;
+
             }
         }
 
@@ -140,7 +208,32 @@ namespace Matlab2CSharp.Pages
                     await encoder.FlushAsync();
                 }
                 compressImage.Source = bitmapImage;
+                afterBitmapImage = bitmapImage;
+                BasicProperties properties = await file.GetBasicPropertiesAsync();
+                afterSize = properties.Size;
+                double result = Convert.ToDouble(afterSize);
+                afterImageBytes = result;
+                if ((result / (1024 * 1024)) >= 1)
+                {
+                    result /= 1024 * 1024;
+                    result = Math.Round(result, 2);
+                    CompressImage.Text = $"压缩图像 大小:{result}MB";
+                }
+                else if (result / (1024) >= 1)
+                {
+                    result /= 1024;
+                    result = Math.Round(result, 2);
+                    CompressImage.Text = $"压缩图像 大小:{result}KB";
+                }
+                else
+                {
+                    result = Math.Round(result, 2);
+                    CompressImage.Text = $"压缩图像 大小:{result}Bytes";
+                }
+                afterSize = result;
             }
+           
+
         }
         private async void GetPicture_Matlab(object sender, RoutedEventArgs e)
         {
@@ -166,11 +259,13 @@ namespace Matlab2CSharp.Pages
                 }
                 else
                 {
-                    /*需要实现和赋值的有
+                    /*如果你想自己编写函数，进行对应操作
+                    * 那么函数应该传入以下四个参数
                     *原图片路径，压缩图片路径。
-                    *同时应该初始化Matlab的传入参数：
-                    *压缩比，文件路径，保存路径
-                    *还有图像压缩函数的文件夹路径
+                    *长压缩比m，宽压缩比n`
+                    *同时函数名应与
+                    *photo_compress(photo_address,save_address,m,n)
+                    *保持一致
                     */
                     filePath = matlabFunctions.Path;
                     string foldPath = Settings.folderPath;
@@ -195,8 +290,31 @@ namespace Matlab2CSharp.Pages
                     await bmpImage.SetSourceAsync(await afterImage.OpenReadAsync());
 
 
-                 
+                   
                     compressImage.Source = bmpImage;
+                    afterBitmapImage = bmpImage;
+                    BasicProperties properties = await afterImage.GetBasicPropertiesAsync();
+                    afterSize = properties.Size;
+                    double result = Convert.ToDouble(afterSize);
+                    afterImageBytes = result;
+                    if ((result / (1024 * 1024)) >= 1)
+                    {
+                        result /= 1024 * 1024;
+                        result = Math.Round(result, 2);
+                        CompressImage.Text = $"压缩图像 大小:{result}MB";
+                    }
+                    else if (result / (1024) >= 1)
+                    {
+                        result /= 1024;
+                        result = Math.Round(result, 2);
+                        CompressImage.Text = $"压缩图像 大小:{result}KB";
+                    }
+                    else
+                    {
+                        result = Math.Round(result, 2);
+                        CompressImage.Text = $"压缩图像 大小:{result}Bytes";
+                    }
+                    afterSize = result;
                 }
             }
         }
@@ -249,7 +367,12 @@ namespace Matlab2CSharp.Pages
             loadedBitmapImage = null;
             filePath = null;
             currentBitmapImage = null;
-            ratio = 0;
+            beforeSize = 0;
+            afterSize = 0;
+            afterImageBytes = 0;
+            imageBytes = 0;
+            OriginalImage.Text = $"原始图像";
+            CompressImage.Text = $"压缩图像";
         }
         public void LoadHelpPage(object sender, RoutedEventArgs e)
         {
@@ -257,7 +380,6 @@ namespace Matlab2CSharp.Pages
             Type pageType = Type.GetType(pageName);
             MainWindow.currentFrame.Navigate(pageType);
         }
-
         private void SetRatio(object sender, RoutedEventArgs e)
         {
             RadioButton selectedButton = sender as RadioButton;
@@ -282,7 +404,6 @@ namespace Matlab2CSharp.Pages
                
             }
         }
-
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.F2)
@@ -295,11 +416,17 @@ namespace Matlab2CSharp.Pages
             }
         }
 
+      
+        private static double imageBytes;
+        private static double afterImageBytes;
         private static StorageFile image;
         private static BitmapImage loadedBitmapImage;
+        private static BitmapImage afterBitmapImage;
         private static StorageFile matlabFunctions;
         private static string filePath;
         private static BitmapImage currentBitmapImage;
         private static int ratio;
+        private static double beforeSize;
+        private static double afterSize;
     }
 }

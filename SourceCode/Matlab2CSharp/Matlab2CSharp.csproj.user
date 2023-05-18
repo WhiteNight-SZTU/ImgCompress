@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Source>C:\Users\LENOVO\Downloads\icon.png</Source>
+    <SmallTileSource>C:\Users\LENOVO\Downloads\icon.png</SmallTileSource>
+    <MediumTileSource>C:\Users\LENOVO\Downloads\icon.png</MediumTileSource>
+    <WideTileSource>C:\Users\LENOVO\Downloads\icon.png</WideTileSource>
+    <LargeTileSource>C:\Users\LENOVO\Downloads\icon.png</LargeTileSource>
+    <AppIconSource>C:\Users\LENOVO\Downloads\icon.png</AppIconSource>
+    <SplashScreenSource>C:\Users\LENOVO\Downloads\www.alltoall.net_trash_binempty_ihkFZMALqV.png</SplashScreenSource>
+    <PackageLogoSource>C:\Users\LENOVO\Downloads\www.alltoall.net_trash_binempty_ihkFZMALqV.png</PackageLogoSource>
+    <BadgeLogoSource>C:\Users\LENOVO\Downloads\www.alltoall.net_trash_binempty_ihkFZMALqV.png</BadgeLogoSource>
+    <UapAppxPackageBuildMode>SideloadOnly</UapAppxPackageBuildMode>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <AppxBuildConfigurationSelection>x86</AppxBuildConfigurationSelection>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+    <_LastSelectedProfileId>C:\Users\LENOVO\source\repos\Matlab2CSharp\Matlab2CSharp\Properties\PublishProfiles\win10-x64.pubxml</_LastSelectedProfileId>
+    <ActiveDebugProfile>Matlab2CSharp (Unpackaged)</ActiveDebugProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Update="App.xaml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </None>
+    <Page Update="Pages\Github.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\PicPages_Compress.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Settings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\HelpPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\HomePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,44 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Window 
+    x:Class="Matlab2CSharp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Matlab2CSharp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    
+    >
+    
+    <Grid x:Name="MainWindowGrid">
+        <Grid x:Name="AppTitleBar" Grid.Column="0" VerticalAlignment="Top">
+            <TextBlock x:Name="AppTitleTextBlock"
+               TextWrapping="NoWrap" Text="Matlab图像处理工具箱"
+               VerticalAlignment="Center"
+               Margin="10,10,1,2"/>
+        </Grid>
+        <NavigationView Margin="0,30,0,0" x:Name="navigationViewBar" SelectionChanged="LoadPages" IsSettingsVisible="False" IsBackButtonVisible="Collapsed" >
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Home" Content="主页" Tag="HomePage" />
+                <NavigationViewItem Icon="AttachCamera" Content="图片压缩" Tag="PicPages_Compress"/> <!--图片压缩页面-->
+                <NavigationViewItem Icon="Help" Content="帮助">
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem Icon="Help" Content="帮助" Tag="HelpPage"/>
+                        <NavigationViewItem Icon="Emoji" Content="Github" Tag="Github"/>
+
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Icon="Setting" Content="设置" Tag="Settings" />
+            </NavigationView.FooterMenuItems>
+            
+            <Frame x:Name="pagesFrame"/>
+            
+        </NavigationView>
+        
+    </Grid>
+</Window>

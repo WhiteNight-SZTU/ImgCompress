@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Matlab2CSharp (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Matlab2CSharp (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

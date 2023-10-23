@@ -1,4 +1,4 @@
-# Matlab2CSharp-WinUI3
+# ImageCompressionTool-WinUI3
 Just a simple program based on WinUI3, which also was my first try on WinUI3. 
 You can calling MATLAB functions at this program, and then process the image, which means you should have installed matlab on your own computer.
 
